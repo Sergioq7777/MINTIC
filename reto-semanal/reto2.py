@@ -7,10 +7,8 @@ class Ticnec:
         
     def cambiar_contraseña():
         print("cambiando contraseña".center(30,"*"))
-
     def Ingresar_coordenadas_actuales():
         print("Ingresar coordenadas actuales".center(30,"*"))
-
     def Ubicar_zona_wifi_cercana():
         print("Ubicar zona wifi más cercana".center(30,"*"))
     def Guardar_archivo_ubicacion_cercana():
@@ -18,42 +16,75 @@ class Ticnec:
     def Actualizar_registros_zonas_wifi_archivo():
         print("Actualizar registros de zonas wifi desde archivo".center(30,"*"))
 
-    def cerrar_sesión():
-        print("cerrar sesión".center(30,"*"))
     
+    #(Reto Semanal 2)-RE01
     def menu_inicial():
-        option = int(input('''
-        1. Cambiar contraseña
-        2. Ingresar coordenadas actuales
-        3. Ubicar zona wifi más cercana
-        4. Guardar archivo con ubicación cercana
-        5. Actualizar registros de zonas wifi desde archivo
-        6. Elegir opción de menú favorita
-        7. Cerrar sesión
+        """
+        RE01:
+        """
+        
+        list_num = [0,1,2,3,4,5,6]
+        list_options = [
+            "Cambiar contraseña", "Ingresar coordenadas actuales", 
+            "Ubicar zona wifi más cercana", "Guardar archivo con ubicación cercana",
+            "Actualizar registros de zonas wifi desde archivo", "Elegir opción de menú favorita",
+            "Cerrar sesión"
+            ]
+        #First step show the options in a list
+        num_options = [list_num, list_options]
+        
+        print("MENU DE INICIO".center(30,"*"))
+        for i in zip(*num_options):
+            print(*i)
+        #Option to select the option
+        option = int(input('Elija una opción del menu: '))
+        if option >= 0 or option <7:
+            if option == 5:
+                change = int(input('Elija un favorito de la opcion 0 al 4: '))
+                if change >= 5 :
+                    print("Opcion no valida".center(30,"-"))
+                    Ticnec.menu_inicial()
+                else:
+                    a = list_options[change]
+                    del list_options[change]
+                    list_options.insert(0,a)
 
-        Elija una opción: 
-        '''))
-        if option > 0 and option < 8:
-            Ticnec.menu_option(option)
+                    num_options2 = [list_num,list_options]
+                    print("MENU DE INICIO".center(30,"*"))
+                    for i in zip(*num_options):
+                        print(*i)
+
+                    o = int(input('Elija una opción del menu: '))
+                    c = list_options[o]
+                    n = list_options.index(c)
+                    Ticnec.menu_option(n)   
+            elif option == 6:
+                print("Sesión cerrada".center(30,"-"))
+                exit()
+            else:
+                Ticnec.menu_option(option)
         else:
             #Usa una funcion recursiva y se vuelve a llamar asi mismo
             Ticnec.menu_inicial()
 
+
+
+
     def menu_option(option):
-        if option==1:
+    
+        if option==0:
             Ticnec.cambiar_contraseña()
-        elif option==2:
+        elif option==1:
             Ticnec.Ingresar_coordenadas_actuales()
-        elif option==3:
+        elif option==2:
             Ticnec.Ubicar_zona_wifi_cercana()
-        elif option==4:
+        elif option==3:
             Ticnec.Guardar_archivo_ubicacion_cercana()
-        elif option==5:
+        elif option==4:
             Ticnec.Actualizar_registros_zonas_wifi_archivo()
-        elif option==6:
-            Ticnec.cerrar_sesión()
         else:
             print("No existe esa opción")
+            Ticnec.menu_inicial()
 
     
     #(Reto Semanal 1)-RE02,RE03,RE04
@@ -96,13 +127,15 @@ class Ticnec:
             {ultimos_tres}+{ultimo}:{res}
             type the answer:"""))
             if res == respuesta_usuario:
-                print("Sesión iniciada".center(30,"*"))
+                print("Sesión iniciada".center(30,"-"))
                 Ticnec.menu_inicial()
             else:
                 print("Error")
         else:
             print("Error")
     
+
+
     #(Reto Semanal 1)-RE01
     def sing_up():
         """
