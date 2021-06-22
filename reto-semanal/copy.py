@@ -82,7 +82,7 @@ class Ticnec:
                     Ticnec.menu_option(option)
             else:
                 #Usa una funcion recursiva y se vuelve a llamar asi mismo
-                print("Error")
+                print("Hasta pronto")
                 if acumulador ==3:
                     print("Sesion terminada")
                     exit()
@@ -160,9 +160,9 @@ class Ticnec:
         
 
         # Convierte Str en Int y arranca de la posicion 3 hasta la 1 en forma inversa
-        ultimos_tres = int(user[2::1])
+        ultimos_tres = int(user[3::1])
         # Convierte Str en Int y arranca de la posicion 5 hasta la 1
-        ultimo = int(user[4::1])
+        ultimo = int(user[5::1])
 
 
         res = int(ultimo + ultimos_tres)
@@ -198,12 +198,12 @@ class Ticnec:
         print("Bienvenido al sistema de ubicación para zonas públicas WIFI".center(70,"*"))
         print("*".center(70,"*"))
         usuario=str(input("Ingrese nombre de usuario : "))
-        if len(usuario) == 5:
+        if len(usuario) == 6:
             password=str(input("Ingrese password: "))
             usuario1 = Ticnec.login(usuario,password)
         else:
             print("Error")
-            print("Porfavor digite usuario y clave de 5 digitos")
+            print("Porfavor digite usuario y clave de 6 digitos")
             #Usa una funcion recursiva y se vuelve a llamar asi mismo
             Ticnec.sing_up()
         

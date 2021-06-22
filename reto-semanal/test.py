@@ -36,15 +36,20 @@ def captcha(num_usr):
     return suma_terminos
 """    
 
-
-ar = len("258741")
-arr = int("258741")
-
-
-print(ar)
-
+        
+    def contador():
+        conta = 1
+        while conta <= 3:
+            ask = int(input("Type option: "))
+            if ask == 6:
+                print("correcto")
+                conta = 4
+            else:
+                print("Respuesta incorrecta")
+                if conta == 3:
+                    print("comunicate con el admin")
+                conta +=1
 
     
 
-        
-        
+contador()
