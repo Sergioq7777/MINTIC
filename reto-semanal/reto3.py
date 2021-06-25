@@ -1,8 +1,10 @@
 
+import numpy as np
+
 usuario = ""
 password = ""
 dic_menu = {
-    "1":"cambiar_contraseña", 
+    "1":"cambiar_contrasena", 
     "2":"Ingresar_coordenadas_actuales",
     "3":"Ubicar_zona_wifi_cercana",
     "4":"Guardar_archivo_ubicacion_cercana",
@@ -10,6 +12,10 @@ dic_menu = {
     "6":"Elegir_opcion_menu_favorita",
     "7":"Cerrar_Sesion"
     }
+ing_coordenadas = []
+mt_coord = np.array(0)
+
+
 
 def main():
     if sing_up():
@@ -17,7 +23,7 @@ def main():
 
 
 
-    
+
     #(Reto Semanal 1)-RE01
 def sing_up():
     """
@@ -107,6 +113,7 @@ def menu_inicial():
     while acumulador <= 3:
         #Option to select the option
         option = int(input('Elija una opción del menu: '))
+        print(f"Usted ha elegido la opción {option}")
         if option in range(1,8):
             if option == 6:
                 Elegir_opcion_menu_favorita()
@@ -131,9 +138,8 @@ def capchat_adivina():
                                         por eso debes colocarme siempre 
                                         de pie”: """)
     q_dos = ("""Para confirmar por favor responda:
-                                        Me separaron de mi hermano siamés, 
-                                        antes era un ocho y ahora soy un...”
-                                        : """)
+                                        Si estoy a la derecha algo valgo,
+                                        pero a la izquierda soy nada: """)
     question_one = int(input(q_uno))
     if question_one == 9:
         question_two = int(input(q_dos))
@@ -155,7 +161,7 @@ def mostrar_menu():
 def menu_option(option):
     valor = dic_menu.get(str(option))
 
-    if valor=="cambiar_contraseña":
+    if valor=="cambiar_contrasena":
         cambiar_contrasena(password)
     elif valor=="Ingresar_coordenadas_actuales":
         Ingresar_coordenadas_actuales()
@@ -183,7 +189,7 @@ def cambiar_contrasena(password):
             if pass_dos == pass_tres:
                 password = pass_dos
                 print(f"contraseña cambiada con exito {password}")
-                return password
+                menu_inicial()
             else:
                 print("Error")
         else:
@@ -197,7 +203,109 @@ def cambiar_contrasena(password):
 
 
 def Ingresar_coordenadas_actuales():
-    print("Ingresar coordenadas actuales".center(30,"*"))
+    #6.689, -72.873
+
+
+    global ing_coordenadas
+    global mt_coord 
+
+    def rango_latitud(lat):
+        if lat > 6.600 and lat < 6.700:
+            return True
+        else:
+            return False
+    def rango_longitud(lon):
+        if lon < -72.870 and  lon > -72.880:
+            return True
+        else:
+            return False
+
+
+    def validator_ll(latitud):
+        if latitud != 0 and rango_latitud(latitud) == True:
+            longitud=float(input("Ingresa longitud: "))
+        else:    
+            print("Error coordenada")
+            exit()
+        return [latitud,longitud]
+    
+
+    def actualizar_coordenada(latitud):
+        if latitud != 0 and rango_latitud(latitud) == True:
+            longitud=float(input("Ingresa longitud: "))
+        else:    
+            print("Error actualización")
+            exit()
+        return [latitud,longitud]
+    
+
+    #Coordenada mas al norte
+    def coordenada_x_mas_alta(latitud):
+        pass
+
+
+    #Coordenada mas al sur
+    def coordenada_x_mas_baja(latitud):
+        pass
+
+    
+    #Coordenada mas al oriente
+    def coordenada_y_mas_baja(longitud):
+        pass
+
+    #Coordenada mas al occidente
+    def coordenada_y_mas_baja(longitud):
+        pass
+    
+
+
+
+    
+    if ing_coordenadas:
+        print(f"""Coordenadas actuales:
+        {mt_coord}""")
+
+        print("Coordenadas Trabajo".center(30,"-"))
+        trabajo_latitud=float(input("Ingresa latitud: "))
+        lista_trabajo = [actualizar_coordenada(trabajo_latitud)]    
+
+        print("Coordenadas Casa".center(30,"-"))
+        casa_latitud=float(input("Ingresa latitud: "))
+        lista_casa = [actualizar_coordenada(casa_latitud)]
+                
+        print("Coordenadas Parque".center(30,"-"))
+        parque_latitud=float(input("Ingresa latitud: "))
+        lista_parque = [actualizar_coordenada(parque_latitud)]
+    else: 
+        print("Coordenadas Trabajo".center(30,"-"))
+        trabajo_latitud=float(input("Ingresa latitud: "))
+        lista_trabajo = [validator_ll(trabajo_latitud)]    
+
+        print("Coordenadas Casa".center(30,"-"))
+        casa_latitud=float(input("Ingresa latitud: "))
+        lista_casa = [validator_ll(casa_latitud)]
+                
+        print("Coordenadas Parque".center(30,"-"))
+        parque_latitud=float(input("Ingresa latitud: "))
+        lista_parque = [validator_ll(parque_latitud)]
+    
+    ing_coordenadas = lista_trabajo,lista_casa,lista_parque
+    
+    mt_coord = np.array(ing_coordenadas)
+    print(mt_coord)
+    menu_inicial()
+
+
+    
+
+
+        
+
+
+
+        
+    
+
 def Ubicar_zona_wifi_cercana():
     print("Ubicar zona wifi más cercana".center(30,"*"))
 def Guardar_archivo_ubicacion_cercana():
@@ -207,13 +315,12 @@ def Actualizar_registros_zonas_wifi_archivo():
 
     
     
-    
-#corregir
+
 def Elegir_opcion_menu_favorita():
     global dic_menu
     change = int(input('Elija un favorito de la opcion 1 al 5: '))
     val = dic_menu.get(str(change))
-    if change > 5 :
+    if change > 5 or change < 0:
         print("Error")
     else:
         res = capchat_adivina()
