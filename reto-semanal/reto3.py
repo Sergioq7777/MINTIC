@@ -215,7 +215,7 @@ def Ingresar_coordenadas_actuales():
         else:
             return False
     def rango_longitud(lon):
-        if lon < -72.870 and  lon > -72.880:
+        if lon < -72.800 and  lon > -72.900:
             return True
         else:
             return False
@@ -227,7 +227,7 @@ def Ingresar_coordenadas_actuales():
         else:    
             print("Error coordenada")
             exit()
-        return [latitud,longitud]
+        return latitud,longitud
     
 
     def actualizar_coordenada(latitud):
@@ -236,58 +236,154 @@ def Ingresar_coordenadas_actuales():
         else:    
             print("Error actualización")
             exit()
-        return [latitud,longitud]
+        return latitud,longitud
     
 
     #Coordenada mas al norte
-    def coordenada_x_mas_alta(latitud):
-        pass
+    def coordenada_x_mas_alta():
+        #almacena toda la matriz
+        npCoord = np.array(mt_coord)
+
+        #almacena eje x o latitudes
+        latitudes = npCoord[:,0]
+
+        #posicion mayor empieza desde cero
+        posMayor = 0
+        #latMayor en la posicion 0 de latitudes 
+        latMayor = latitudes[posMayor]
+
+
+        j = 0
+        for i in latitudes:
+            if i > latMayor:
+                latMayor = i
+                posMayor = j
+            j += 1
+            
+        return mt_coord[posMayor]
 
 
     #Coordenada mas al sur
-    def coordenada_x_mas_baja(latitud):
-        pass
+    def coordenada_x_mas_baja():
+        #almacena toda la matriz
+        npCoord = np.array(mt_coord)
 
-    
+        #almacena eje x o latitudes
+        latitudes = npCoord[:,0]
+
+        #posicion mayor empieza desde cero
+        posMayor = 0
+        #latMayor en la posicion 0 de latitudes 
+        latMayor = latitudes[posMayor]
+
+
+        j = 0
+        for i in latitudes:
+            if i < latMayor:
+                latMayor = i
+                posMayor = j
+            j += 1
+            
+        return mt_coord[posMayor]
+
+
     #Coordenada mas al oriente
-    def coordenada_y_mas_baja(longitud):
-        pass
+    def coordenada_y_mas_baja():
+        n = -1
+        #almacena toda la matriz
+        npCoord = np.array(mt_coord)
+
+        #almacena eje x o latitudes
+        latitudes = npCoord[:,0] * n
+
+        #posicion mayor empieza desde cero
+        posMayor = 0
+        #latMayor en la posicion 0 de latitudes 
+        latMayor = latitudes[posMayor]
+
+
+        j = 0
+        for i in latitudes:
+            if i < latMayor:
+                latMayor = i
+                posMayor = j
+            j += 1
+        posMayor * n
+            
+        return mt_coord[posMayor]
 
     #Coordenada mas al occidente
-    def coordenada_y_mas_baja(longitud):
-        pass
-    
+    def coordenada_y_mas_alta():
+        n = -1
+        #almacena toda la matriz
+        npCoord = np.array(mt_coord)
+
+        #almacena eje y o longitudes
+        longitudes = npCoord[:,1] * n
+
+        #posicion mayor empieza desde cero
+        posMayor = 0
+        #latMayor en la posicion 0 de latitudes 
+        latMayor = longitudes[posMayor]
 
 
+        j = 0
+        for i in longitudes:
+            if i > latMayor:
+                latMayor = i
+                posMayor = j
+            j += 1
+        posMayor * n
+        return  mt_coord[posMayor]
 
-    
+        
     if ing_coordenadas:
-        print(f"""Coordenadas actuales:
-        {mt_coord}""")
+        all_cordenadas = [coordenada_x_mas_alta(), coordenada_x_mas_baja(), coordenada_y_mas_alta(), coordenada_y_mas_baja()]
 
-        print("Coordenadas Trabajo".center(30,"-"))
-        trabajo_latitud=float(input("Ingresa latitud: "))
-        lista_trabajo = [actualizar_coordenada(trabajo_latitud)]    
 
-        print("Coordenadas Casa".center(30,"-"))
-        casa_latitud=float(input("Ingresa latitud: "))
-        lista_casa = [actualizar_coordenada(casa_latitud)]
-                
-        print("Coordenadas Parque".center(30,"-"))
-        parque_latitud=float(input("Ingresa latitud: "))
-        lista_parque = [actualizar_coordenada(parque_latitud)]
+        j = 0
+        for i in all_cordenadas:
+            j +=1
+            print(f'coordenada [latitud,longitud] {j}: {i}')
+      
+        opt = int(input(f"""
+        Presione 1,2 o 3 para actualizar la respectiva coordenadas
+        presione 0 para regresar al menu:
+        """))
+        if opt > 3:
+            print("Error actualización")
+            exit()
+        else: 
+            if opt == 0:
+                menu_inicial()
+            elif opt == 1:
+                print("Coordenadas Trabajo".center(30,"-"))
+                trabajo_latitud=float(input("Ingresa latitud: "))
+                lista_trabajo = actualizar_coordenada(trabajo_latitud)
+                menu_inicial()
+            elif opt == 2:
+                print("Coordenadas Casa".center(30,"-"))
+                casa_latitud=float(input("Ingresa latitud: "))
+                lista_casa = actualizar_coordenada(casa_latitud)
+                menu_inicial()
+            elif opt == 3:
+                print("Coordenadas Parque".center(30,"-"))
+                parque_latitud=float(input("Ingresa latitud: "))
+                lista_parque = actualizar_coordenada(parque_latitud)
+                menu_inicial()
+
     else: 
         print("Coordenadas Trabajo".center(30,"-"))
         trabajo_latitud=float(input("Ingresa latitud: "))
-        lista_trabajo = [validator_ll(trabajo_latitud)]    
+        lista_trabajo = validator_ll(trabajo_latitud)    
 
         print("Coordenadas Casa".center(30,"-"))
         casa_latitud=float(input("Ingresa latitud: "))
-        lista_casa = [validator_ll(casa_latitud)]
+        lista_casa = validator_ll(casa_latitud)
                 
         print("Coordenadas Parque".center(30,"-"))
         parque_latitud=float(input("Ingresa latitud: "))
-        lista_parque = [validator_ll(parque_latitud)]
+        lista_parque = validator_ll(parque_latitud)
     
     ing_coordenadas = lista_trabajo,lista_casa,lista_parque
     
@@ -333,7 +429,6 @@ def Elegir_opcion_menu_favorita():
 
 def Cerrar_Sesion():
     print("Hasta pronto")
-    print("Sesión cerrada".center(30,"-"))
     exit()
 
 
